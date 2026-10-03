@@ -34,7 +34,10 @@ mock.module("src/services/tokenEstimation.ts", () => ({
 mock.module("src/utils/slowOperations.ts", () => ({
   jsonStringify: JSON.stringify,
   jsonParse: JSON.parse,
-  slowLogging: { enabled: false },
+  slowLogging: Object.assign(
+    () => ({ [Symbol.dispose]() {} }),
+    { enabled: false },
+  ),
   clone: (v: any) => structuredClone(v),
   cloneDeep: (v: any) => structuredClone(v),
   callerFrame: () => "",
